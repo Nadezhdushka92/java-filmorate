@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.model.User;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ import java.util.Map;
 @RequestMapping("/films")
 public class FilmController {
     private final Map<Long, Film> films = new HashMap<>();
+    protected int idCnt = 0;
 
     @GetMapping
     public Collection<Film> findAll() {
@@ -36,16 +38,6 @@ public class FilmController {
         return film;
     }
 
-    // вспомогательный метод для генерации идентификатора нового поста
-    private long getNextId() {
-        long currentMaxId = films.keySet()
-                .stream()
-                .mapToLong(id -> id)
-                .max()
-                .orElse(0);
-        return ++currentMaxId;
-    }
-
     @PutMapping
     public Film update(@Valid @RequestBody Film updateFilm) {
         // проверяем необходимые условия
@@ -55,30 +47,20 @@ public class FilmController {
         }
         if (films.containsKey(updateFilm.getId())) {
             Film updatedFilm = films.get(updateFilm.getId());
-            if (updateFilm.getDescription() == null || updateFilm.getDescription().isBlank()) {
-                throw new ValidationException("Описание не может быть пустым");
-            } else {
+            if (filmValidation(updatedFilm)) {
+
                 // если фильм найден и все условия соблюдены, обновляем его содержимое
                 updatedFilm.setDescription(updateFilm.getDescription());
                 log.info("Изменили описание фильма");
-            }
-            if (updateFilm.getName() == null || updateFilm.getName().isBlank()) {
-                throw new ValidationException("Имя не может быть пустым");
-            } else {
+
                 // если фильм найден и все условия соблюдены, обновляем его содержимое
                 updatedFilm.setName(updateFilm.getName());
                 log.info("Изменили название фильма");
-            }
-            if (updateFilm.getReleaseDate() == null) {
-                throw new ValidationException("Дата релиза не может быть пустой");
-            } else {
+
                 // если фильм найден и все условия соблюдены, обновляем его содержимое
                 updatedFilm.setReleaseDate(updateFilm.getReleaseDate());
                 log.info("Изменили дату релиза фильма");
-            }
-            if (updateFilm.getDuration() == null) {
-                throw new ValidationException("Продолжительность не может быть пустой");
-            } else {
+
                 // если фильм найден и все условия соблюдены, обновляем его содержимое
                 updatedFilm.setDuration(updateFilm.getDuration());
                 log.info("Изменили продолжительность фильма");
@@ -87,5 +69,20 @@ public class FilmController {
         }
         log.error("Не найден фильм с id {}", updateFilm.getId());
         throw new ValidationException("Фильм с id = " + updateFilm.getId() + " не найден");
+    }
+
+    public boolean filmValidation(Film film) {
+
+        if (film.getName() != null) {
+            return true;
+        } else {
+            throw new ValidationException("Валидация данных по обновлению фильма не пройдена");
+        }
+    }
+
+    // вспомогательный метод для генерации идентификатора нового поста
+    private long getNextId() {
+        idCnt++;
+        return idCnt;
     }
 }

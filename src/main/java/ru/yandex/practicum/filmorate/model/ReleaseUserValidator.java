@@ -3,10 +3,12 @@ package ru.yandex.practicum.filmorate.model;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 
-public class ReleaseDataValidator implements ConstraintValidator<ReleaseDate, LocalDate> {
-    private static final LocalDate DATE_OF_RELEASE = LocalDate.of(1895, 12, 28);
+public class ReleaseUserValidator implements ConstraintValidator<ReleaseUser, LocalDate> {
+    private static final LocalDate DATE_OF_RELEASE = LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
 
     @Override
     public boolean isValid(LocalDate localDate, ConstraintValidatorContext constraintValidatorContext) {
@@ -14,7 +16,7 @@ public class ReleaseDataValidator implements ConstraintValidator<ReleaseDate, Lo
     }
 
     @Override
-    public void initialize(ReleaseDate constraintAnnotation) {
+    public void initialize(ReleaseUser constraintAnnotation) {
         ConstraintValidator.super.initialize(constraintAnnotation);
     }
 }

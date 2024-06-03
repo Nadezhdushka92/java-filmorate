@@ -11,11 +11,11 @@ import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Documented
-@Constraint(validatedBy = ReleaseDateValidator.class)
+@Constraint(validatedBy = ReleaseUserValidator.class)
 @Target(FIELD)
 @Retention(RUNTIME)
-public @interface ReleaseDate {
-    String message () default "Дата должна быть после 28 декабря 1895 г.";
+public @interface ReleaseUser {
+    String message () default "Дата рождения не может быть из будущего";
 
     Class<?>[] groups () default {};
 
