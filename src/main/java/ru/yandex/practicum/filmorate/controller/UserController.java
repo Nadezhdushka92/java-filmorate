@@ -3,94 +3,72 @@ package ru.yandex.practicum.filmorate.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.service.UserService;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/users")
-@RequiredArgsConstructor
-@Slf4j
 public class UserController {
-    private final Map<Long, User> users = new HashMap<>();
-    protected int idCnt = 0;
+    private final UserService userService;
+
+    @Autowired
+    public UserController ( UserService userService ) {
+        this.userService = userService;
+    }
 
     @GetMapping
     public Collection<User> findAll() {
-        return users.values();
+        return userService.findAll();
     }
 
     @PostMapping
-    public User create(@Valid @RequestBody User user) {
-        // проверяем выполнение необходимых условий
-        if (user.getLogin() == null || user.getLogin().isBlank()) {
-            throw new ValidationException("Login не может быть пустым");
-        }
-        if (user.getName() == null) {
-            log.debug("Имя не может быть пустым {}", user.getId());
-            user.setName("common");
-            //throw new ValidationException("Имя не может быть пустым");
-        }
-        // формируем дополнительные данные
-        user.setId(getNextId());
-        log.debug("Создан новый пользователь и ему назначен id {}", user.getId());
-        // сохраняем нового пользователя в памяти приложения
-        users.put(user.getId(), user);
-
-        return user;
+    @ResponseStatus(HttpStatus.OK)
+    public User create( @Valid @RequestBody User user) {
+        return userService.create(user);
     }
 
     @PutMapping
     public User update(@Valid @RequestBody User updateUser) {
-        // проверяем необходимые условия
-        if (updateUser.getId() == null) {
-            log.error("Не указан id");
-            throw new ValidationException("Id должен быть указан");
-        }
-        if (users.containsKey(updateUser.getId())) {
-            User updatedUser = users.get(updateUser.getId());
-                if (userValidation(updatedUser)) {
-
-                    // если пользователь найден и все условия соблюдены, обновляем его содержимое
-                    updatedUser.setEmail(updateUser.getEmail());
-                    log.info("Изменили email пользователя");
-
-                    // если фильм найден и все условия соблюдены, обновляем его содержимое
-                    updatedUser.setName(updateUser.getLogin());
-                    log.info("Изменили login пользователя");
-
-                    // если фильм найден и все условия соблюдены, обновляем его содержимое
-                    updatedUser.setName(updateUser.getName());
-                    log.info("Изменили имя пользователя");
-
-                    // если фильм найден и все условия соблюдены, обновляем его содержимое
-                    updatedUser.setBirthday(updateUser.getBirthday());
-                    log.info("Изменили дату рождения пользователя");
-                }
-            return updateUser;
-        }
-        log.error("Не найден пользователь с id {}", updateUser.getId());
-        throw new ValidationException("Пользователь с id = " + updateUser.getId() + " не найден");
+        return userService.update(updateUser);
     }
 
-    public boolean userValidation(User user) {
-
-        if (user.getEmail() != null && (user.getLogin() != null
-             && !user.getLogin().isBlank())) {
-            return true;
-        } else {
-            throw new ValidationException("Валидация данных пользователя не пройдена");
-        }
-
+    @GetMapping("/{userId}")
+    public User findUserById(@PathVariable long userId){
+        return userService.findUserById(userId);
     }
 
-    // вспомогательный метод для генерации идентификатора нового пользователя
-    private long getNextId() {
-        idCnt++;
-        return idCnt;
+    @DeleteMapping(value = "/{userId}")
+    public void deleteUser(@PathVariable long userId) {
+        userService.deleteUser(userId);
     }
-}
+
+    @PutMapping(value = "/{userId}/friends/{friendId}")
+        public void addFriend(@PathVariable long userId, @PathVariable long friendId) {
+            userService.addFriend(userId, friendId);
+    }
+
+    @DeleteMapping(value = "/{userId}/friends/{friendId}")
+    public void removeFromFriends ( @PathVariable long userId, @PathVariable long friendId ) {
+        userService.removeFromFriends(userId, friendId);
+    }
+
+    @GetMapping(value = ("/users/{userId}/friends/common/{otherId}"))
+    public List<User> getCommonFriends( @PathVariable long userId, @PathVariable long otherId) {
+        return userService.getCommonFriends(userId,otherId);
+    }
+
+    @GetMapping(value = ("/users/{userId}"))
+    public List<User> getCommonAllFriends( @PathVariable long userId) {
+        return userService.getAllFriends(userId);
+    }
+
+    }
