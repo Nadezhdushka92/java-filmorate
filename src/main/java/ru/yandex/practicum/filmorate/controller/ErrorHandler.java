@@ -15,21 +15,21 @@ import ru.yandex.practicum.filmorate.exception.ValidationException;
 public class ErrorHandler {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleValidationException( ValidationException e) {
+    public ErrorResponse handleValidationException(ValidationException e) {
         log.error(e.getMessage());
         return new ErrorResponse("Ошибка валидации");
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handleFilmNotFond( FilmNotExistException e) {
+    public ErrorResponse handleFilmNotFond(FilmNotExistException e) {
         log.error(e.getMessage());
         return new ErrorResponse("Фильм не найден");
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handleUserNotFond( UserNotExistException e) {
+    public ErrorResponse handleUserNotFond(UserNotExistException e) {
         log.error(e.getMessage());
         return new ErrorResponse("Пользователь не найден");
     }
@@ -40,9 +40,10 @@ public class ErrorHandler {
         log.error(e.getMessage());
         return new ErrorResponse("Рейтинг не найден");
     }
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorResponse handleUnknownUserException( UnknownUserException e) {
+    public ErrorResponse handleUnknownUserException(UnknownUserException e) {
         log.error(e.getMessage());
         return new ErrorResponse("Произошло обновление неизвестного пользователя - ошибка");
     }

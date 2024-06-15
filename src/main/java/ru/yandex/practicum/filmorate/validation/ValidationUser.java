@@ -1,13 +1,12 @@
 package ru.yandex.practicum.filmorate.validation;
 
 import lombok.extern.slf4j.Slf4j;
-import ru.yandex.practicum.filmorate.exception.UnknownUserException;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
 
 @Slf4j
 public class ValidationUser {
-    public void validation( User user) {
+    public void validation(User user) {
         // проверяем выполнение необходимых условий
         String[] lineEmail = user.getEmail().split("");
         String email = "0";
