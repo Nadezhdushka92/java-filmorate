@@ -37,9 +37,10 @@ public class FilmService {
         if (filmStorage.findFilmById(film.getId()) == null) {
             log.warn("Невозможно обновить фильм");
             throw new FilmNotExistException("Невозможно обновить фильм");
+        } else {
+            log.info("Фильм с id {} обновлён", film.getId());
+            return filmStorage.update(film);
         }
-        log.info("Фильм с id {} обновлён",film.getId());
-        return filmStorage.update(film);
     }
 
     public Film findFilmById(long filmId) {
@@ -67,7 +68,6 @@ public class FilmService {
                 .limit(count)
                 .collect(Collectors.toList());
     }
-
 
     // вспомогательный метод для генерации идентификатора нового поста
     private long getNextId() {

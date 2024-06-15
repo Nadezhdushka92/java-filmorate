@@ -3,6 +3,7 @@ package ru.yandex.practicum.filmorate.storage;
 import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import ru.yandex.practicum.filmorate.exception.UnknownUserException;
 import ru.yandex.practicum.filmorate.model.User;
 
 import java.util.*;
@@ -21,8 +22,12 @@ public class InMemoryUserStorage implements UserStorage {
 
     @Override
     public User update(User newUser) {
+        if (users.containsKey(newUser.getId())) {
             users.put(newUser.getId(), newUser);
             return newUser;
+        } else {
+            throw new UnknownUserException("Неизвестный пользователь");
+        }
     }
 
     @Override

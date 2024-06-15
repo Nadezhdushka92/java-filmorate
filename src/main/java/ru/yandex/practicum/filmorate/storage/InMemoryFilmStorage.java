@@ -3,6 +3,8 @@ package ru.yandex.practicum.filmorate.storage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import ru.yandex.practicum.filmorate.exception.FilmNotExistException;
+import ru.yandex.practicum.filmorate.exception.UnknownUserException;
 import ru.yandex.practicum.filmorate.model.Film;
 
 import java.util.HashMap;
@@ -25,16 +27,25 @@ public class InMemoryFilmStorage implements FilmStorage {
 
     @Override
     public Film create(Film film) {
-        return null;
+        films.put(film.getId(), film);
+        return film;
     }
 
     @Override
-    public Film update(Film film) {
-        return null;
+    public Film update(Film newFilm) {
+        if (films.containsKey(newFilm.getId())) {
+            films.put(newFilm.getId(), newFilm);
+            return newFilm;
+        } else {
+            throw new FilmNotExistException("Неизвестный пользователь");
+        }
     }
 
     @Override
     public Film findFilmById(Long id) {
+        if (films.containsKey(id)) {
+            return films.get(id);
+        }
         return null;
     }
 
