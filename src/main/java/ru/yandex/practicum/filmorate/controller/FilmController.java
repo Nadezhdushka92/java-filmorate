@@ -5,16 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.FilmService;
-import ru.yandex.practicum.filmorate.service.UserService;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @RestController
@@ -23,7 +18,7 @@ public class FilmController {
     private final FilmService filmService;
 
     @Autowired
-    public FilmController ( FilmService filmService ) {
+    public FilmController(FilmService filmService) {
         this.filmService = filmService;
     }
 
@@ -44,7 +39,7 @@ public class FilmController {
     }
 
     @GetMapping("/{filmId}")
-    public Film findFilmById(@PathVariable long filmId){
+    public Film findFilmById(@PathVariable long filmId) {
         return filmService.findFilmById(filmId);
     }
 
@@ -54,7 +49,7 @@ public class FilmController {
     }
 
     @DeleteMapping(value = "/{id}/like/{userId}")
-    public void deleteLike ( @PathVariable long id, @PathVariable long userId ) {
+    public void deleteLike(@PathVariable long id, @PathVariable long userId) {
         filmService.deleteLike(id, userId);
     }
 
