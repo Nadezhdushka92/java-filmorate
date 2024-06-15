@@ -3,9 +3,7 @@ package ru.yandex.practicum.filmorate.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import ru.yandex.practicum.filmorate.exception.UserNotExistException;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.FilmStorage;
@@ -24,7 +22,7 @@ public class UserService {
     protected int idCnt = 0;
 
     @Autowired
-    public UserService ( @Qualifier("inMemoryUserStorage") UserStorage userStorage, @Qualifier("inMemoryFilmStorage") FilmStorage filmStorage ) {
+    public UserService(@Qualifier("inMemoryUserStorage") UserStorage userStorage, @Qualifier("inMemoryFilmStorage") FilmStorage filmStorage) {
         this.userStorage = userStorage;
         this.filmStorage = filmStorage;
         validation = new ValidationUser();
@@ -61,7 +59,7 @@ public class UserService {
         log.info("Пользователь с id {} удалён", userId);
     }
 
-    public void addFriend(long userId, long friendId){
+    public void addFriend(long userId, long friendId) {
         userStorage.addFriend(userId, friendId);
         log.info("Пользователи с id {} и {} теперь друзья", userId, friendId);
     }

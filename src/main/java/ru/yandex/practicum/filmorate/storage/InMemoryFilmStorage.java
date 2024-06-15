@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.model.User;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,27 +19,27 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
-    public Map<Long, Film> getFilms () {
+    public Map<Long, Film> getFilms() {
         return films;
     }
 
     @Override
-    public Film create ( Film film ) {
+    public Film create(Film film) {
         return null;
     }
 
     @Override
-    public Film update ( Film film ) {
+    public Film update(Film film) {
         return null;
     }
 
     @Override
-    public Film findFilmById ( Long id ) {
+    public Film findFilmById(Long id) {
         return null;
     }
 
     @Override
-    public void addLike ( long filmId, long userId ) {
+    public void addLike(long filmId, long userId) {
         Film film = findFilmById(filmId);
         if ((film != null) && (userStorage.findUserById(userId) != null)) {
             film.getLikes().add(userId);
@@ -50,7 +49,7 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
-    public void deleteLike ( long filmId, long userId ) {
+    public void deleteLike(long filmId, long userId) {
         Film film = findFilmById(filmId);
         if ((film != null) && (userStorage.findUserById(userId) != null)) {
             film.getLikes().remove(userId);
