@@ -11,7 +11,7 @@ import ru.yandex.practicum.filmorate.exception.UserNotExistException;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 
 @Slf4j
-@RestControllerAdvice(basePackages = "ru.yandex.practicum.filmorate")
+@RestControllerAdvice //(basePackages = "ru.yandex.practicum.filmorate")
 public class ErrorHandler {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)

@@ -36,7 +36,7 @@ public class InMemoryFilmStorage implements FilmStorage {
             films.put(newFilm.getId(), newFilm);
             return newFilm;
         } else {
-            throw new FilmNotExistException("Неизвестный пользователь");
+            throw new FilmNotExistException("Неизвестный фильм");
         }
     }
 
