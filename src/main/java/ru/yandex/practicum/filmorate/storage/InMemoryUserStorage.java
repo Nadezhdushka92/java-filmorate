@@ -3,7 +3,7 @@ package ru.yandex.practicum.filmorate.storage;
 import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import ru.yandex.practicum.filmorate.exception.UnknownUserException;
+import ru.yandex.practicum.filmorate.exception.UserNotExistException;
 import ru.yandex.practicum.filmorate.model.User;
 
 import java.util.*;
@@ -26,7 +26,7 @@ public class InMemoryUserStorage implements UserStorage {
             users.put(newUser.getId(), newUser);
             return newUser;
         } else {
-            throw new UnknownUserException("Неизвестный пользователь");
+            throw new UserNotExistException("Неизвестный пользователь");
         }
     }
 
@@ -39,8 +39,9 @@ public class InMemoryUserStorage implements UserStorage {
     public User findUserById(long userId) {
         if (users.containsKey(userId)) {
             return users.get(userId);
+        } else {
+            throw new UserNotExistException("Ошибка неизвестный id пользователя");
         }
-        return null;
     }
 
     @Override
@@ -50,21 +51,29 @@ public class InMemoryUserStorage implements UserStorage {
 
     @Override
     public void addFriend(long userId, long friendId) {
-        User user = findUserById(userId);
-        User friend = findUserById(friendId);
-        if (user != null && friend != null) {
-            user.getFriends().add(friendId);
-            user.getFriends().add(userId);
+        if (users.containsKey(userId) && users.containsKey(friendId)) {
+            User user = findUserById(userId);
+            User friend = findUserById(friendId);
+            if (user != null && friend != null) {
+                friend.getFriends().add(userId);
+                user.getFriends().add(friendId);
+            }
+        } else {
+            throw new UserNotExistException("Ошибка неизвестный id пользователя");
         }
     }
 
     @Override
     public void removeFromFriends(long userId, long friendId) {
-        User user = findUserById(userId);
-        User friend = findUserById(friendId);
-        if (user != null && friend != null) {
-            user.getFriends().remove(friendId);
-            user.getFriends().remove(userId);
+        if (users.containsKey(userId) && users.containsKey(friendId)) {
+            User user = findUserById(userId);
+            User friend = findUserById(friendId);
+            if (user != null && friend != null && user.getFriends() != null) {
+                user.getFriends().remove(friendId);
+                friend.getFriends().remove(userId);
+            }
+        } else {
+            throw new UserNotExistException("Ошибка удаления неизвестного id пользователя или друга");
         }
     }
 
@@ -73,24 +82,29 @@ public class InMemoryUserStorage implements UserStorage {
         List<User> commonFriends = new ArrayList<>();
         User user = findUserById(userId);
         User otherUser = findUserById(otherId);
-        if (user != null && otherUser != null) {
+        if (user != null && otherUser != null && !otherUser.getFriends().isEmpty() && !user.getFriends().isEmpty()) {
             Set<Long> commonFriendsIds = Sets.intersection(user.getFriends(),otherUser.getFriends());
             for (Long friendsId : commonFriendsIds) {
                 commonFriends.add(findUserById(friendsId));
             }
+            return commonFriends;
+        } else {
+            return new ArrayList<>();
         }
-        return commonFriends;
+
     }
 
     @Override
     public List<User> getAllFriends(long userId) {
         List<User> friends = new ArrayList<>();
         User user = findUserById(userId);
-        if (user != null) {
+        if (user != null && !user.getFriends().isEmpty()) {
             for (Long friendIds : user.getFriends()) {
                 friends.add(findUserById(friendIds));
             }
+            return friends;
+        } else {
+            return new ArrayList<>();
         }
-        return friends;
     }
 }

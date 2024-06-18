@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.exception.FilmNotExistException;
+import ru.yandex.practicum.filmorate.exception.UserNotExistException;
 import ru.yandex.practicum.filmorate.model.Film;
 
 import java.util.HashMap;
@@ -36,7 +37,7 @@ public class InMemoryFilmStorage implements FilmStorage {
             films.put(newFilm.getId(), newFilm);
             return newFilm;
         } else {
-            throw new FilmNotExistException("Неизвестный фильм");
+            throw new FilmNotExistException("Неизвестный фильм, обновить невозможно ");
         }
     }
 
@@ -44,25 +45,38 @@ public class InMemoryFilmStorage implements FilmStorage {
     public Film findFilmById(Long id) {
         if (films.containsKey(id)) {
             return films.get(id);
+        } else {
+            throw new FilmNotExistException("Неизвестный фильм");
         }
-        return null;
     }
 
     @Override
     public void addLike(long filmId, long userId) {
+        if (films.containsKey(filmId)) {
         Film film = findFilmById(filmId);
-        if ((film != null) && (userStorage.findUserById(userId) != null)) {
-            film.getLikes().add(userId);
+        if (film != null && userStorage.findUserById(userId) != null && findFilmById(filmId).getLikes() != null) {
+            findFilmById(filmId).getLikes().add(userId);
+        }
         } else {
-            log.info("Пользователю с id {} не удалось поставить фильму с id {} лайк", userId, filmId);
+            log.info("Фильм с id {} не существует", filmId);
+            throw new FilmNotExistException("Неизвестный фильм");
+
         }
     }
 
     @Override
     public void deleteLike(long filmId, long userId) {
-        Film film = findFilmById(filmId);
-        if ((film != null) && (userStorage.findUserById(userId) != null)) {
-            film.getLikes().remove(userId);
+        if (films.containsKey(filmId)) {
+            Film film = findFilmById(filmId);
+            if (film != null && userStorage.findUserById(userId) != null && film.getLikes() != null) {
+                if (filmId > 0) {
+                    film.getLikes().remove(userId);
+                } else {
+                    throw new UserNotExistException("Неизвестный пользователь");
+                }
+            }
+        } else {
+            throw new FilmNotExistException("Неизвестный фильм, невозможно удалить лайк");
         }
     }
 }
