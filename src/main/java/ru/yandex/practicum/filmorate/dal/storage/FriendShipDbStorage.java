@@ -59,13 +59,13 @@ public class FriendShipDbStorage extends BaseDbStorage<FriendShip> {
     }
 
 
-    public List<User> getFriends(long user_id) {
-        return jdbcTemplate.query(FIND_ALL_FRIENDS_BY_ID, new UserRowMapper(), user_id);
+    public List<User> getFriends(long id) {
+        return jdbcTemplate.query(FIND_ALL_FRIENDS_BY_ID, new UserRowMapper(), id);
     }
 
 
-    public List<User> getMutualFriends(long user_id1, long user_id2) {
-        return jdbcTemplate.query(FIND_MUTUAL_FRIENDS, new UserRowMapper(), user_id1, user_id2);
+    public List<User> getMutualFriends(long user1_id, long user2_id) {
+        return jdbcTemplate.query(FIND_MUTUAL_FRIENDS, new UserRowMapper(), user1_id, user2_id);
     }
 
     private void add(String query, Object... params) {
