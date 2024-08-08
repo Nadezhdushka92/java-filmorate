@@ -44,7 +44,7 @@ public class ValidationUser {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate nowDate = LocalDate.now();
-        LocalDate birthday = LocalDate.parse(user.getBirthday(), formatter);
+        LocalDate birthday = LocalDate.parse(user.getBirthday().toString(), formatter);
 
         if (nowDate.isBefore(birthday)) {
             throw new ValidationException("Дата рождения не может быть в будущем");
