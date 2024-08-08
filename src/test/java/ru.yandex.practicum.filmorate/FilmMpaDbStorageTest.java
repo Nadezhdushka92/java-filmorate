@@ -33,8 +33,8 @@ public class FilmMpaDbStorageTest {
     void getMpaTest() {
         Mpa mpa = filmMpaDbStorage.getMpa(1L).get();
 
-        assertThat(mpa).hasFieldOrPropertyWithValue("mpa_id", 1L);
-        assertThat(mpa).hasFieldOrPropertyWithValue("mpa_name", "G");
+        assertThat(mpa).hasFieldOrPropertyWithValue("id", 1L);
+        assertThat(mpa).hasFieldOrPropertyWithValue("name", "G");
     }
 
     @Test
@@ -43,11 +43,11 @@ public class FilmMpaDbStorageTest {
         List<Mpa> mpa = filmMpaDbStorage.findAllMpa();
 
         assertThat(mpa).hasSize(5);
-        assertThat(mpa.get(0)).hasFieldOrPropertyWithValue("mpa_id", 1L);
-        assertThat(mpa.get(0)).hasFieldOrPropertyWithValue("mpa_name", "G");
+        assertThat(mpa.get(0)).hasFieldOrPropertyWithValue("id", 1L);
+        assertThat(mpa.get(0)).hasFieldOrPropertyWithValue("name", "G");
 
-        assertThat(mpa.get(1)).hasFieldOrPropertyWithValue("mpa_id", 2L);
-        assertThat(mpa.get(1)).hasFieldOrPropertyWithValue("mpa_name", "PG");
+        assertThat(mpa.get(1)).hasFieldOrPropertyWithValue("id", 2L);
+        assertThat(mpa.get(1)).hasFieldOrPropertyWithValue("name", "PG");
     }
 
     @Test
@@ -55,14 +55,14 @@ public class FilmMpaDbStorageTest {
     void updateMpaTest() {
         final Film film = filmDbStorage.getFilm(1L).get();
 
-        assertThat(film).hasFieldOrPropertyWithValue("mpa_name", null);
+        assertThat(film).hasFieldOrPropertyWithValue("mpa", null);
 
         final Mpa mpa = filmMpaDbStorage.getMpa(1L).get();
 
-        filmMpaDbStorage.updateMpa(mpa, film.getFilm_id());
-        Long id = filmMpaDbStorage.getMpaId(film.getFilm_id());
+        filmMpaDbStorage.updateMpa(mpa, film.getId());
+        Long id = filmMpaDbStorage.getMpaId(film.getId());
         film.setMpa(filmMpaDbStorage.getMpa(id).get());
 
-        assertThat(film).hasFieldOrPropertyWithValue("mpa_name", mpa);
+        assertThat(film).hasFieldOrPropertyWithValue("mpa", mpa);
     }
 }

@@ -38,7 +38,7 @@ public class UserDbStorageTests {
         final List<User> users = userDbStorage.allUsers();
 
         assertEquals(1, users.size());
-        assertThat(users.get(0)).hasFieldOrPropertyWithValue("user_id", 1L);
+        assertThat(users.get(0)).hasFieldOrPropertyWithValue("id", 1L);
         assertThat(users.get(0)).hasFieldOrPropertyWithValue("email", "user1@yandex.ru");
         assertThat(users.get(0)).hasFieldOrPropertyWithValue("login", "login_user1");
         assertThat(users.get(0)).hasFieldOrPropertyWithValue("name", "Name_user1");
@@ -56,7 +56,7 @@ public class UserDbStorageTests {
 
         final User updatedUser = userDbStorage.getUser(1L).get();
 
-        assertThat(updatedUser).hasFieldOrPropertyWithValue("user_id", 1L);
+        assertThat(updatedUser).hasFieldOrPropertyWithValue("id", 1L);
         assertThat(updatedUser).hasFieldOrPropertyWithValue("email", "user3@yandex.ru");
         assertThat(updatedUser).hasFieldOrPropertyWithValue("login", "login_user3");
         assertThat(updatedUser).hasFieldOrPropertyWithValue("name", "Name_user3");
@@ -69,13 +69,13 @@ public class UserDbStorageTests {
         final List<User> users = userDbStorage.allUsers();
 
         assertEquals(4, users.size());
-        assertThat(users.get(0)).hasFieldOrPropertyWithValue("user_id", 1L);
+        assertThat(users.get(0)).hasFieldOrPropertyWithValue("id", 1L);
         assertThat(users.get(0)).hasFieldOrPropertyWithValue("email", "user1@yandex.ru");
         assertThat(users.get(0)).hasFieldOrPropertyWithValue("login", "login_user1");
         assertThat(users.get(0)).hasFieldOrPropertyWithValue("name", "Name_user1");
         assertThat(users.get(0)).hasFieldOrProperty("birthday");
 
-        assertThat(users.get(1)).hasFieldOrPropertyWithValue("user_id", 2L);
+        assertThat(users.get(1)).hasFieldOrPropertyWithValue("id", 2L);
         assertThat(users.get(1)).hasFieldOrPropertyWithValue("email", "user2@yandex.ru");
         assertThat(users.get(1)).hasFieldOrPropertyWithValue("login", "login_user2");
         assertThat(users.get(1)).hasFieldOrPropertyWithValue("name", "Name_user2");
@@ -87,7 +87,7 @@ public class UserDbStorageTests {
     void getUserByIdTest() {
         final User user = userDbStorage.getUser(1L).get();
 
-        assertThat(user).hasFieldOrPropertyWithValue("user_id", 1L);
+        assertThat(user).hasFieldOrPropertyWithValue("id", 1L);
         assertThat(user).hasFieldOrPropertyWithValue("email", "user1@yandex.ru");
         assertThat(user).hasFieldOrPropertyWithValue("login", "login_user1");
         assertThat(user).hasFieldOrPropertyWithValue("name", "Name_user1");
@@ -99,7 +99,7 @@ public class UserDbStorageTests {
     void getUserByEmailTest() {
         final User user = userDbStorage.findByEmail("user1@yandex.ru").get();
 
-        assertThat(user).hasFieldOrPropertyWithValue("user_id", 1L);
+        assertThat(user).hasFieldOrPropertyWithValue("id", 1L);
         assertThat(user).hasFieldOrPropertyWithValue("email", "user1@yandex.ru");
         assertThat(user).hasFieldOrPropertyWithValue("login", "login_user1");
         assertThat(user).hasFieldOrPropertyWithValue("name", "Name_user1");

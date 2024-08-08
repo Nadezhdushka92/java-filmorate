@@ -39,11 +39,11 @@ public class FilmLikeDbStorageTest {
     void saveFilmLikeTest() {
         final Film film = filmDbStorage.getFilm(1L).get();
         final User user = userDbStorage.getUser(1L).get();
-        final Like like = new Like(film.getFilm_id(), user.getId());
+        final Like like = new Like(film.getId(), user.getId());
 
         filmLikeDbStorage.save(like);
 
-        final Like getlike = filmLikeDbStorage.findLike(film.getFilm_id(), user.getId()).get();
+        final Like getlike = filmLikeDbStorage.findLike(film.getId(), user.getId()).get();
 
         assertEquals(like, getlike);
     }
@@ -54,21 +54,21 @@ public class FilmLikeDbStorageTest {
         final Film film = filmDbStorage.getFilm(1L).get();
         final User user = userDbStorage.getUser(1L).get();
         final User user2 = userDbStorage.getUser(2L).get();
-        final Like like1 = new Like(film.getFilm_id(), user.getId());
-        final Like like2 = new Like(film.getFilm_id(), user2.getId());
+        final Like like1 = new Like(film.getId(), user.getId());
+        final Like like2 = new Like(film.getId(), user2.getId());
 
         filmLikeDbStorage.save(like1);
         filmLikeDbStorage.save(like2);
-        final Like getLike1 = filmLikeDbStorage.findLike(film.getFilm_id(), user.getId()).get();
-        final Like getLike2 = filmLikeDbStorage.findLike(film.getFilm_id(), user2.getId()).get();
+        final Like getLike1 = filmLikeDbStorage.findLike(film.getId(), user.getId()).get();
+        final Like getLike2 = filmLikeDbStorage.findLike(film.getId(), user2.getId()).get();
 
         assertEquals(like1, getLike1);
         assertEquals(like2, getLike2);
 
-        filmLikeDbStorage.delete(film.getFilm_id(), user.getId());
+        filmLikeDbStorage.delete(film.getId(), user.getId());
 
-        Optional<Like> newLike1 = filmLikeDbStorage.findLike(film.getFilm_id(), user.getId());
-        Optional<Like> newLike2 = filmLikeDbStorage.findLike(film.getFilm_id(), user2.getId());
+        Optional<Like> newLike1 = filmLikeDbStorage.findLike(film.getId(), user.getId());
+        Optional<Like> newLike2 = filmLikeDbStorage.findLike(film.getId(), user2.getId());
 
         assertTrue(newLike1.isEmpty());
         assertTrue(newLike2.isPresent());
@@ -81,9 +81,9 @@ public class FilmLikeDbStorageTest {
         final Film film2 = filmDbStorage.getFilm(2L).get();
         final User user = userDbStorage.getUser(1L).get();
         final User user2 = userDbStorage.getUser(2L).get();
-        final Like like1 = new Like(film.getFilm_id(), user.getId());
-        final Like like2 = new Like(film2.getFilm_id(), user2.getId());
-        final Like like3 = new Like(film2.getFilm_id(), user.getId());
+        final Like like1 = new Like(film.getId(), user.getId());
+        final Like like2 = new Like(film2.getId(), user2.getId());
+        final Like like3 = new Like(film2.getId(), user.getId());
 
         filmLikeDbStorage.save(like1);
         filmLikeDbStorage.save(like2);
