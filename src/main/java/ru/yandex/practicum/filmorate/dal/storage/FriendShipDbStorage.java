@@ -64,8 +64,8 @@ public class FriendShipDbStorage extends BaseDbStorage<FriendShip> {
     }
 
 
-    public List<User> getMutualFriends(long user_id, long user2_id) {
-        return jdbcTemplate.query(FIND_MUTUAL_FRIENDS, new UserRowMapper(), user_id, user2_id);
+    public List<User> getMutualFriends(long id1, long id2) {
+        return jdbcTemplate.query(FIND_MUTUAL_FRIENDS, new UserRowMapper(), id1, id2);
     }
 
     private void add(String query, Object... params) {
