@@ -72,31 +72,31 @@ public class UserService {
         return checkUsers(id);
     }
 
-    public User addFriends(Long userId, Long friend_id) {
+    public User addFriends(Long userId, Long friendId) {
         User user = checkUsers(userId);
-        checkUsers(friend_id);
+        checkUsers(friendId);
 
-        Optional<FriendShip> friendShip = friendShipDbStorage.findFriendShip(userId, friend_id);
+        Optional<FriendShip> friendShip = friendShipDbStorage.findFriendShip(userId, friendId);
         log.info("Проверяем друга{} ", friendShip);
         if (friendShip.isPresent()) {
-            log.error("Пользователь: {} уже состоит в дружбе с пользователем: {}", friend_id, userId);
-            throw new ValidationException("Пользователь: " + friend_id
+            log.error("Пользователь: {} уже состоит в дружбе с пользователем: {}", friendId, userId);
+            throw new ValidationException("Пользователь: " + friendId
                     + " уже состоит в дружбе с пользователем: " + userId);
         }
 
-        FriendShip newFriendShip = new FriendShip(userId, friend_id);
+        FriendShip newFriendShip = new FriendShip(userId, friendId);
         friendShipDbStorage.save(newFriendShip);
-        log.info("Пользователь {} добавлен в список друзей пользователя {}", friend_id, userId);
+        log.info("Пользователь {} добавлен в список друзей пользователя {}", friendId, userId);
         log.info("Друзья {}", newFriendShip);
 
         return user;
     }
 
-    public User deleteFriend(Long userId, Long friend_id) {
+    public User deleteFriend(Long userId, Long friendId) {
         User user = checkUsers(userId);
-        checkUsers(friend_id);
-        friendShipDbStorage.delete(userId, friend_id);
-        log.info("Пользователи с id {} и {} теперь не являются друзьями", userId, friend_id);
+        checkUsers(friendId);
+        friendShipDbStorage.delete(userId, friendId);
+        log.info("Пользователи с id {} и {} теперь не являются друзьями", userId, friendId);
         return user;
     }
 

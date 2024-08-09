@@ -25,7 +25,7 @@ Output id and login of friends on id user = 1:
 SELECT u.login,
        u.userId
 FROM user AS u
-WHERE u.userId IN (SELECT uf.friend_id
+WHERE u.userId IN (SELECT uf.friendId
                     FROM users_friends AS uf
                     WHERE uf.userId = 1);
 ```

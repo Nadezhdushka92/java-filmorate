@@ -574,7 +574,7 @@
               "script": {
                 "exec": [
                   "const user1Id = pm.collectionVariables.get(\"id\");\r",
-                  "const user2Id = pm.collectionVariables.get(\"friend_id\");\r",
+                  "const user2Id = pm.collectionVariables.get(\"friendId\");\r",
                   "\r",
                   "pm.test(\"Status code is 200\", function () {\r",
                   "    pm.expect(pm.response.code).to.be.oneOf([200,204]);\r",
@@ -617,7 +617,7 @@
                   "        user1 = await api.addUser(rnd.getUser());\r",
                   "        user2 = await api.addUser(rnd.getUser());\r",
                   "        pm.collectionVariables.set(\"id\", user1.id);\r",
-                  "        pm.collectionVariables.set(\"friend_id\", user2.id);\r",
+                  "        pm.collectionVariables.set(\"friendId\", user2.id);\r",
                   "    } catch(err) {\r",
                   "        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
                   "    }\r",
@@ -665,7 +665,7 @@
               }
             },
             "url": {
-              "raw": "{{baseUrl}}/users/{{id}}/friends/{{friend_id}}",
+              "raw": "{{baseUrl}}/users/{{id}}/friends/{{friendId}}",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -673,7 +673,7 @@
                 "users",
                 "{{id}}",
                 "friends",
-                "{{friend_id}}"
+                "{{friendId}}"
               ]
             }
           },
@@ -712,7 +712,7 @@
                   "        user1 = await api.addUser(rnd.getUser());\r",
                   "        user2 = await api.addUser(rnd.getUser());\r",
                   "        pm.collectionVariables.set(\"id\", user1.id);\r",
-                  "        pm.collectionVariables.set(\"friend_id\", user2.id+1);\r",
+                  "        pm.collectionVariables.set(\"friendId\", user2.id+1);\r",
                   "    } catch(err) {\r",
                   "        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
                   "    }\r",
@@ -761,7 +761,7 @@
               }
             },
             "url": {
-              "raw": "{{baseUrl}}/users/{{id}}/friends/{{friend_id}}",
+              "raw": "{{baseUrl}}/users/{{id}}/friends/{{friendId}}",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -769,7 +769,7 @@
                 "users",
                 "{{id}}",
                 "friends",
-                "{{friend_id}}"
+                "{{friendId}}"
               ]
             }
           },
@@ -982,7 +982,7 @@
               "script": {
                 "exec": [
                   "const user1Id = pm.collectionVariables.get(\"id\");\r",
-                  "const user2Id = pm.collectionVariables.get(\"friend_id\");\r",
+                  "const user2Id = pm.collectionVariables.get(\"friendId\");\r",
                   "\r",
                   "pm.test(\"Status code is 200\", function () {\r",
                   "    pm.expect(pm.response.code).to.be.oneOf([200,204]);\r",
@@ -1027,7 +1027,7 @@
                   "        user2 = await api.addUser(rnd.getUser());\r",
                   "        await api.addFriend(user1.id, user2.id);\r",
                   "        pm.collectionVariables.set(\"id\", user1.id);\r",
-                  "        pm.collectionVariables.set(\"friend_id\", user2.id);\r",
+                  "        pm.collectionVariables.set(\"friendId\", user2.id);\r",
                   "    } catch(err) {\r",
                   "        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
                   "    }\r",
@@ -1076,7 +1076,7 @@
               }
             },
             "url": {
-              "raw": "{{baseUrl}}/users/{{id}}/friends/{{friend_id}}",
+              "raw": "{{baseUrl}}/users/{{id}}/friends/{{friendId}}",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -1084,7 +1084,7 @@
                 "users",
                 "{{id}}",
                 "friends",
-                "{{friend_id}}"
+                "{{friendId}}"
               ]
             }
           },
@@ -1098,7 +1098,7 @@
               "script": {
                 "exec": [
                   "const user1Id = pm.collectionVariables.get(\"id\");\r",
-                  "const user2Id = pm.collectionVariables.get(\"friend_id\");\r",
+                  "const user2Id = pm.collectionVariables.get(\"friendId\");\r",
                   "\r",
                   "pm.test(\"Status code is 200\", function () {\r",
                   "    pm.expect(pm.response.code).to.be.oneOf([200,204]);\r",
@@ -1142,7 +1142,7 @@
                   "        user1 = await api.addUser(rnd.getUser());\r",
                   "        user2 = await api.addUser(rnd.getUser());\r",
                   "        pm.collectionVariables.set(\"id\", user1.id);\r",
-                  "        pm.collectionVariables.set(\"friend_id\", user2.id);\r",
+                  "        pm.collectionVariables.set(\"friendId\", user2.id);\r",
                   "    } catch(err) {\r",
                   "        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
                   "    }\r",
@@ -1191,7 +1191,7 @@
               }
             },
             "url": {
-              "raw": "{{baseUrl}}/users/{{id}}/friends/{{friend_id}}",
+              "raw": "{{baseUrl}}/users/{{id}}/friends/{{friendId}}",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -1199,7 +1199,7 @@
                 "users",
                 "{{id}}",
                 "friends",
-                "{{friend_id}}"
+                "{{friendId}}"
               ]
             }
           },
@@ -1213,7 +1213,7 @@
               "script": {
                 "exec": [
                   "const user1Id = pm.collectionVariables.get(\"id\");\r",
-                  "const user2Id = pm.collectionVariables.get(\"friend_id\");\r",
+                  "const user2Id = pm.collectionVariables.get(\"friendId\");\r",
                   "\r",
                   "pm.test(\"Status code is 200\", function () {\r",
                   "    pm.expect(pm.response.code).to.be.oneOf([200,204]);\r",
@@ -1258,7 +1258,7 @@
                   "        user2 = await api.addUser(rnd.getUser());\r",
                   "        await api.addFriend(user1.id, user2.id);\r",
                   "        pm.collectionVariables.set(\"id\", user2.id);\r",
-                  "        pm.collectionVariables.set(\"friend_id\", user1.id);\r",
+                  "        pm.collectionVariables.set(\"friendId\", user1.id);\r",
                   "    } catch(err) {\r",
                   "        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
                   "    }\r",
@@ -1307,7 +1307,7 @@
               }
             },
             "url": {
-              "raw": "{{baseUrl}}/users/{{id}}/friends/{{friend_id}}",
+              "raw": "{{baseUrl}}/users/{{id}}/friends/{{friendId}}",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -1315,7 +1315,7 @@
                 "users",
                 "{{id}}",
                 "friends",
-                "{{friend_id}}"
+                "{{friendId}}"
               ]
             }
           },
@@ -1355,7 +1355,7 @@
                   "        user2 = await api.addUser(rnd.getUser());\r",
                   "        await api.addFriend(user1.id, user2.id);\r",
                   "        pm.collectionVariables.set(\"id\", user1.id + 4);\r",
-                  "        pm.collectionVariables.set(\"friend_id\", user2.id);\r",
+                  "        pm.collectionVariables.set(\"friendId\", user2.id);\r",
                   "    } catch(err) {\r",
                   "        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
                   "    }\r",
@@ -1404,7 +1404,7 @@
               }
             },
             "url": {
-              "raw": "{{baseUrl}}/users/{{id}}/friends/{{friend_id}}",
+              "raw": "{{baseUrl}}/users/{{id}}/friends/{{friendId}}",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -1412,7 +1412,7 @@
                 "users",
                 "{{id}}",
                 "friends",
-                "{{friend_id}}"
+                "{{friendId}}"
               ]
             }
           },
@@ -1452,7 +1452,7 @@
                   "        user2 = await api.addUser(rnd.getUser());\r",
                   "        await api.addFriend(user1.id, user2.id);\r",
                   "        pm.collectionVariables.set(\"id\", user1.id);\r",
-                  "        pm.collectionVariables.set(\"friend_id\", user2.id+1);\r",
+                  "        pm.collectionVariables.set(\"friendId\", user2.id+1);\r",
                   "    } catch(err) {\r",
                   "        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
                   "    }\r",
@@ -1501,7 +1501,7 @@
               }
             },
             "url": {
-              "raw": "{{baseUrl}}/users/{{id}}/friends/{{friend_id}}",
+              "raw": "{{baseUrl}}/users/{{id}}/friends/{{friendId}}",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -1509,7 +1509,7 @@
                 "users",
                 "{{id}}",
                 "friends",
-                "{{friend_id}}"
+                "{{friendId}}"
               ]
             }
           },
@@ -1554,7 +1554,7 @@
                   "        await api.addFriend(user1.id, user2.id);\r",
                   "        await api.addFriend(user2.id, user3.id);\r",
                   "        pm.collectionVariables.set(\"id\", user1.id);\r",
-                  "        pm.collectionVariables.set(\"friend_id\", user2.id);\r",
+                  "        pm.collectionVariables.set(\"friendId\", user2.id);\r",
                   "        pm.collectionVariables.set(\"user3_id\", user3.id);\r",
                   "    } catch(err) {\r",
                   "        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
@@ -1606,7 +1606,7 @@
               }
             },
             "url": {
-              "raw": "{{baseUrl}}/users/{{id}}/friends/common/{{friend_id}}",
+              "raw": "{{baseUrl}}/users/{{id}}/friends/common/{{friendId}}",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -1615,7 +1615,7 @@
                 "{{id}}",
                 "friends",
                 "common",
-                "{{friend_id}}"
+                "{{friendId}}"
               ]
             }
           },
@@ -5134,7 +5134,7 @@
       "value": ""
     },
     {
-      "key": "friend_id",
+      "key": "friendId",
       "value": ""
     },
     {
