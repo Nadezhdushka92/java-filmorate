@@ -13,26 +13,26 @@ import java.util.Optional;
 
 @Repository
 public class FriendShipDbStorage extends BaseDbStorage<FriendShip> {
-    private static final String INSERT_QUERY = "INSERT INTO friends(user1_id, user2_Id, status_friend)" +
+    private static final String INSERT_QUERY = "INSERT INTO friends(user1Id, user2Id, status_friend)" +
             "VALUES (?, ?, ?)";
-    private static final String FIND_BY_FRIENDS = "SELECT * FROM friends WHERE user1_id = ? AND user2_id = ? " +
+    private static final String FIND_BY_FRIENDS = "SELECT * FROM friends WHERE user1Id = ? AND user2Id = ? " +
             "AND status_friend= 1";
-    private static final String DELETE_FRIENDS = "DELETE FROM friends WHERE user1_id =? AND user2_id =?" +
+    private static final String DELETE_FRIENDS = "DELETE FROM friends WHERE user1Id =? AND user2Id =?" +
             " AND status_friend = 1";
     private static final String FIND_MUTUAL_FRIENDS = "SELECT users.* \n" +
             "FROM users \n" +
             "JOIN (\n" +
-            "    SELECT DISTINCT f1.user2_id AS common_friend \n" +
+            "    SELECT DISTINCT f1.user2Id AS common_friend \n" +
             "    FROM friends f1 \n" +
-            "    JOIN friends f2 ON f1.user2_id = f2.user2_id \n" +
-            "    WHERE f1.user1_id = ? AND f2.user1_id = ? \n" +
+            "    JOIN friends f2 ON f1.user2Id = f2.user2Id \n" +
+            "    WHERE f1.user1Id = ? AND f2.user1Id = ? \n" +
             "    AND f1.status_friend = 1 AND f2.status_friend = 1\n" +
             ") common_friends \n" +
             "ON users.user_id = common_friends.common_friend";
     private static final String FIND_ALL_FRIENDS_BY_ID = "SELECT u.*\n" +
             "FROM users AS u\n" +
-            "JOIN friends AS f ON u.user_id = f.user2_id\n" +
-            "WHERE f.user1_id = ? AND f.status_friend = 1;";
+            "JOIN friends AS f ON u.user_id = f.user2Id\n" +
+            "WHERE f.user1Id = ? AND f.status_friend = 1;";
     private final JdbcTemplate jdbcTemplate;
 
     public FriendShipDbStorage(JdbcTemplate jdbc, RowMapper<FriendShip> mapper, JdbcTemplate jdbcTemplate) {
@@ -43,8 +43,8 @@ public class FriendShipDbStorage extends BaseDbStorage<FriendShip> {
     public FriendShip save(FriendShip friendShip) {
         add(
                 INSERT_QUERY,
-                friendShip.getUser1_id(),
-                friendShip.getUser2_id(),
+                friendShip.getUser1Id(),
+                friendShip.getUser2Id(),
                 friendShip.getStatusFriend());
         return friendShip;
     }

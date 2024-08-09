@@ -15,10 +15,10 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 CREATE TABLE IF NOT EXISTS friends (
-   user1_id BIGINT REFERENCES users (user_id),
-   user2_id BIGINT REFERENCES users (user_id),
+   user1Id BIGINT REFERENCES users (user_id),
+   user2Id BIGINT REFERENCES users (user_id),
    status_friend INT,
-   FOREIGN KEY (user1_id) REFERENCES users (user_id)
+   FOREIGN KEY (user1Id) REFERENCES users (user_id)
 );
 
 CREATE TABLE IF NOT EXISTS mpa (
