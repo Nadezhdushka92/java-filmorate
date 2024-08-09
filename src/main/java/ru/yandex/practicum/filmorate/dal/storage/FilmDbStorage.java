@@ -13,13 +13,13 @@ import java.util.Optional;
 @Repository
 public class FilmDbStorage extends BaseDbStorage<Film> implements FilmStorage {
     private static final String FIND_ALL_QUERY = "SELECT * FROM films";
-    private static final String FIND_BY_ID_QUERY = "SELECT film_id, name, description, releaseDate, duration\n" +
+    private static final String FIND_BY_ID_QUERY = "SELECT filmId, name, description, releaseDate, duration\n" +
             "FROM films\n" +
-            "WHERE film_id = ?;";
+            "WHERE filmId = ?;";
     private static final String INSERT_QUERY = "INSERT INTO films(name, description, releaseDate, duration)" +
             "VALUES (?, ?, ?, ?)";
     private static final String UPDATE_QUERY = "UPDATE films SET name = ?, description = ?, " +
-            "releaseDate = ?, duration = ? WHERE film_id = ?";
+            "releaseDate = ?, duration = ? WHERE filmId = ?";
 
     public FilmDbStorage(JdbcTemplate jdbc, RowMapper<Film> mapper) {
         super(jdbc, mapper, Film.class);

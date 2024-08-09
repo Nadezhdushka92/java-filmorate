@@ -2646,7 +2646,7 @@
                   "        user = await api.addUser(rnd.getUser());\r",
                   "        film = await api.addFilm(rnd.getFilm());\r",
                   "        pm.collectionVariables.set(\"id\", user.id);\r",
-                  "        pm.collectionVariables.set(\"film_id\", film.id);\r",
+                  "        pm.collectionVariables.set(\"filmId\", film.id);\r",
                   "    } catch(err) {\r",
                   "        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
                   "    }\r",
@@ -2694,13 +2694,13 @@
               }
             },
             "url": {
-              "raw": "{{baseUrl}}/films/{{film_id}}/like/{{id}}",
+              "raw": "{{baseUrl}}/films/{{filmId}}/like/{{id}}",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "films",
-                "{{film_id}}",
+                "{{filmId}}",
                 "like",
                 "{{id}}"
               ]
@@ -2737,7 +2737,7 @@
                   "        film = await api.addFilm(rnd.getFilm());\r",
                   "        await api.addLike(film.id, user.id);\r",
                   "        pm.collectionVariables.set(\"id\", user.id);\r",
-                  "        pm.collectionVariables.set(\"film_id\", film.id);\r",
+                  "        pm.collectionVariables.set(\"filmId\", film.id);\r",
                   "    } catch(err) {\r",
                   "        console.error(\"Ошибка при подготовке тестовых данных.\", err);\r",
                   "    }\r",
@@ -2785,13 +2785,13 @@
               }
             },
             "url": {
-              "raw": "{{baseUrl}}/films/{{film_id}}/like/{{id}}",
+              "raw": "{{baseUrl}}/films/{{filmId}}/like/{{id}}",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "films",
-                "{{film_id}}",
+                "{{filmId}}",
                 "like",
                 "{{id}}"
               ]
@@ -5170,7 +5170,7 @@
       "value": ""
     },
     {
-      "key": "film_id",
+      "key": "filmId",
       "value": ""
     },
     {

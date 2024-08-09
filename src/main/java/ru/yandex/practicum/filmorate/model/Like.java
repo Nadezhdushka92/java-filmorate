@@ -8,6 +8,6 @@ import lombok.Data;
 @AllArgsConstructor
 @Builder
 public class Like {
-    private Long film_id;
-    private Long user_id;
+    private Long filmId;
+    private Long userId;
 }

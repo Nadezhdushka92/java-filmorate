@@ -72,31 +72,31 @@ public class UserService {
         return checkUsers(id);
     }
 
-    public User addFriends(Long user_id, Long friend_id) {
-        User user = checkUsers(user_id);
+    public User addFriends(Long userId, Long friend_id) {
+        User user = checkUsers(userId);
         checkUsers(friend_id);
 
-        Optional<FriendShip> friendShip = friendShipDbStorage.findFriendShip(user_id, friend_id);
+        Optional<FriendShip> friendShip = friendShipDbStorage.findFriendShip(userId, friend_id);
         log.info("Проверяем друга{} ", friendShip);
         if (friendShip.isPresent()) {
-            log.error("Пользователь: {} уже состоит в дружбе с пользователем: {}", friend_id, user_id);
+            log.error("Пользователь: {} уже состоит в дружбе с пользователем: {}", friend_id, userId);
             throw new ValidationException("Пользователь: " + friend_id
-                    + " уже состоит в дружбе с пользователем: " + user_id);
+                    + " уже состоит в дружбе с пользователем: " + userId);
         }
 
-        FriendShip newFriendShip = new FriendShip(user_id, friend_id);
+        FriendShip newFriendShip = new FriendShip(userId, friend_id);
         friendShipDbStorage.save(newFriendShip);
-        log.info("Пользователь {} добавлен в список друзей пользователя {}", friend_id, user_id);
+        log.info("Пользователь {} добавлен в список друзей пользователя {}", friend_id, userId);
         log.info("Друзья {}", newFriendShip);
 
         return user;
     }
 
-    public User deleteFriend(Long user_id, Long friend_id) {
-        User user = checkUsers(user_id);
+    public User deleteFriend(Long userId, Long friend_id) {
+        User user = checkUsers(userId);
         checkUsers(friend_id);
-        friendShipDbStorage.delete(user_id, friend_id);
-        log.info("Пользователи с id {} и {} теперь не являются друзьями", user_id, friend_id);
+        friendShipDbStorage.delete(userId, friend_id);
+        log.info("Пользователи с id {} и {} теперь не являются друзьями", userId, friend_id);
         return user;
     }
 
@@ -109,12 +109,12 @@ public class UserService {
         return friendShipDbStorage.getFriends(id);
     }
 
-    public List<User> allMutualFriends(Long user_id1, Long user_id2) {
+    public List<User> allMutualFriends(Long userId1, Long userId2) {
         log.info("Используем allMutualFriends ");
-        checkUsers(user_id1);
-        checkUsers(user_id2);
+        checkUsers(userId1);
+        checkUsers(userId2);
 
-        return friendShipDbStorage.getMutualFriends(user_id1, user_id2);
+        return friendShipDbStorage.getMutualFriends(userId1, userId2);
     }
 
     private User checkUsers(Long user) {

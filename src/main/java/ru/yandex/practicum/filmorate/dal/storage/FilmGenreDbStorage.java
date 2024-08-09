@@ -18,8 +18,8 @@ public class FilmGenreDbStorage extends BaseDbStorage<Genre> {
     private static final String GET_ALL_ID_GENRE = "SELECT * " +
             "FROM genres g " +
             "JOIN films_genres fg ON g.id = fg.genre_id " +
-            "WHERE fg.film_id = ?";
-    private static final String INSERT_GENRE_BY_ID = "INSERT INTO films_genres (film_id, genre_id) VALUES(?, ?)";
+            "WHERE fg.filmId = ?";
+    private static final String INSERT_GENRE_BY_ID = "INSERT INTO films_genres (filmId, genre_id) VALUES(?, ?)";
 
     public FilmGenreDbStorage(JdbcTemplate jdbc, RowMapper<Genre> mapper) {
         super(jdbc, mapper, Genre.class);

@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS genres CASCADE;
 DROP TABLE IF EXISTS films_genres CASCADE;
 
 CREATE TABLE IF NOT EXISTS users (
-    user_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    userId BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(255) NOT NULL,
     login VARCHAR(255) NOT NULL,
     name VARCHAR(255) NOT NULL,
@@ -15,10 +15,10 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 CREATE TABLE IF NOT EXISTS friends (
-   user1Id BIGINT REFERENCES users (user_id),
-   user2Id BIGINT REFERENCES users (user_id),
+   user1Id BIGINT REFERENCES users (userId),
+   user2Id BIGINT REFERENCES users (userId),
    status_friend INT,
-   FOREIGN KEY (user1Id) REFERENCES users (user_id)
+   FOREIGN KEY (user1Id) REFERENCES users (userId)
 );
 
 CREATE TABLE IF NOT EXISTS mpa (
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS mpa (
 );
 
 CREATE TABLE IF NOT EXISTS films (
-    film_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    filmId BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description VARCHAR(255) NOT NULL,
     releaseDate DATE,
@@ -42,17 +42,17 @@ CREATE TABLE IF NOT EXISTS genres (
 );
 
 CREATE TABLE IF NOT EXISTS films_genres (
-    film_id BIGINT,
+    filmId BIGINT,
     genre_id BIGINT NOT NULL,
-    PRIMARY KEY (film_id, genre_id),
-    FOREIGN KEY (film_id) REFERENCES films(film_id),
+    PRIMARY KEY (filmId, genre_id),
+    FOREIGN KEY (filmId) REFERENCES films(filmId),
     FOREIGN KEY (genre_id) REFERENCES genres(id)
 );
 
 CREATE TABLE IF NOT EXISTS likes (
-    film_id BIGINT NOT NULL,
-    user_id BIGINT NOT NULL,
-    PRIMARY KEY (user_id, film_id),
-    FOREIGN KEY (film_id) REFERENCES films (film_id),
-    FOREIGN KEY (user_id) REFERENCES users (user_id)
+    filmId BIGINT NOT NULL,
+    userId BIGINT NOT NULL,
+    PRIMARY KEY (userId, filmId),
+    FOREIGN KEY (filmId) REFERENCES films (filmId),
+    FOREIGN KEY (userId) REFERENCES users (userId)
 );

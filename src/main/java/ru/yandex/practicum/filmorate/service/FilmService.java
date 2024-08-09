@@ -111,37 +111,37 @@ public class FilmService {
         return film;
     }
 
-    public Film addLike(Long film_id, Long user_id) {
-        Film film = checkFilm(film_id);
-        userDbStorage.getUser(user_id).orElseThrow(() -> {
-            log.error("Пользователь не найден{}", user_id);
-            return new UserNotExistException("Пользователь  не найден " + user_id);
+    public Film addLike(Long filmId, Long userId) {
+        Film film = checkFilm(filmId);
+        userDbStorage.getUser(userId).orElseThrow(() -> {
+            log.error("Пользователь не найден{}", userId);
+            return new UserNotExistException("Пользователь  не найден " + userId);
         });
 
-        Optional<Like> like = likeDbStorage.findLike(film_id, user_id);
+        Optional<Like> like = likeDbStorage.findLike(filmId, userId);
         if (like.isPresent()) {
-            log.error("Пользователь уже поставил лайк{} на фильм {}", user_id, film_id);
+            log.error("Пользователь уже поставил лайк{} на фильм {}", userId, filmId);
             throw new ValidationException("Пользователь уже поставил лайк " +
-                    user_id + " на фильм " + film_id);
+                    userId + " на фильм " + filmId);
         }
-        likeDbStorage.save(new Like(film_id, user_id));
-        log.info("Пользователем с id {} добавлен лайк фильму {}", user_id, film_id);
+        likeDbStorage.save(new Like(filmId, userId));
+        log.info("Пользователем с id {} добавлен лайк фильму {}", userId, filmId);
         return film;
     }
 
-    public Film deleteLike(Long film_id, Long user_id) {
+    public Film deleteLike(Long filmId, Long userId) {
         log.info("Запуск метода deleteLike");
-        Film film = checkFilm(film_id);
-        userDbStorage.getUser(user_id).orElseThrow(() -> {
-            log.error("Пользователь не найден{}", user_id);
-            return new UserNotExistException("Пользователь  не найден " + user_id);
+        Film film = checkFilm(filmId);
+        userDbStorage.getUser(userId).orElseThrow(() -> {
+            log.error("Пользователь не найден{}", userId);
+            return new UserNotExistException("Пользователь  не найден " + userId);
         });
-        if (!likeDbStorage.delete(film_id, user_id)) {
-            log.error("Лайк пользователя с id {} у фильма {} не удален", user_id, film_id);
-            throw new ValidationException("Лайк " + user_id + " у фильма " +
+        if (!likeDbStorage.delete(filmId, userId)) {
+            log.error("Лайк пользователя с id {} у фильма {} не удален", userId, filmId);
+            throw new ValidationException("Лайк " + userId + " у фильма " +
                     film + " не удален");
         }
-        log.info("Пользователь с id {} удалил лайк с id {}", user_id, film_id);
+        log.info("Пользователь с id {} удалил лайк с id {}", userId, filmId);
         return film;
     }
 

@@ -13,14 +13,14 @@ import java.util.Optional;
 
 @Repository
 public class FilmLikeDbStorage extends BaseDbStorage<Like> {
-    private static final String INSERT_QUERY = "INSERT INTO likes(film_id, user_id)" +
+    private static final String INSERT_QUERY = "INSERT INTO likes(filmId, userId)" +
             "VALUES (?, ?)";
-    private static final String FIND_BY_FRIENDS = "SELECT * FROM likes WHERE film_id = ? AND user_id = ?";
-    private static final String DELETE_FRIENDS = "DELETE FROM likes WHERE film_id =? AND user_id =?";
-    private static final String COUNT_LIKES = "SELECT films.*, COUNT(likes.user_id) AS like_count\n" +
+    private static final String FIND_BY_FRIENDS = "SELECT * FROM likes WHERE filmId = ? AND userId = ?";
+    private static final String DELETE_FRIENDS = "DELETE FROM likes WHERE filmId =? AND userId =?";
+    private static final String COUNT_LIKES = "SELECT films.*, COUNT(likes.userId) AS like_count\n" +
             "FROM films\n" +
-            "JOIN likes ON films.film_id = likes.film_id\n" +
-            "GROUP BY films.film_id\n" +
+            "JOIN likes ON films.filmId = likes.filmId\n" +
+            "GROUP BY films.filmId\n" +
             "ORDER BY like_count DESC\n" +
             "LIMIT ?;";
 
@@ -31,8 +31,8 @@ public class FilmLikeDbStorage extends BaseDbStorage<Like> {
     public Like save(Like like) {
         add(
                 INSERT_QUERY,
-                like.getFilm_id(),
-                like.getUser_id()
+                like.getFilmId(),
+                like.getUserId()
         );
         return like;
     }

@@ -12,10 +12,10 @@ Top 10 film name on count likes:
 ```sql
 SELECT name
 FROM film
-WHERE film_id IN (SELECT film_id
+WHERE filmId IN (SELECT filmId
                   FROM likes
-                  GROUP BY film_id
-                  ORDER BY COUNT(user_id) desc
+                  GROUP BY filmId
+                  ORDER BY COUNT(userId) desc
                    LIMIT 10);
 ```
 Ex.2
@@ -23,9 +23,9 @@ Output id and login of friends on id user = 1:
 
 ```sql
 SELECT u.login,
-       u.user_id
+       u.userId
 FROM user AS u
-WHERE u.user_id IN (SELECT uf.friend_id
+WHERE u.userId IN (SELECT uf.friend_id
                     FROM users_friends AS uf
-                    WHERE uf.user_id = 1);
+                    WHERE uf.userId = 1);
 ```

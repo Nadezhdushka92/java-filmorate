@@ -13,12 +13,12 @@ import java.util.Optional;
 public class FilmMpaDbStorage extends BaseDbStorage<Mpa> {
     private static final String UPDATE_MPA_ID = "UPDATE films" +
             " SET mpa_id = ?" +
-            " WHERE film_id = ?";
+            " WHERE filmId = ?";
     private static final String FIND_ALL_MPA = "SELECT * FROM mpa";
     private static final String FIND_BY_ID_MPA = "SELECT * FROM mpa WHERE id = ?";
     private static final String GET_MPA_ID = "SELECT mpa_id\n" +
             "FROM films\n" +
-            "WHERE film_id = ?;";
+            "WHERE filmId = ?;";
 
     public FilmMpaDbStorage(JdbcTemplate jdbc, RowMapper<Mpa> mapper) {
         super(jdbc, mapper, Mpa.class);

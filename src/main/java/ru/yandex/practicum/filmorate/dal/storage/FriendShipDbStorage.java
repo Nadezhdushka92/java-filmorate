@@ -28,10 +28,10 @@ public class FriendShipDbStorage extends BaseDbStorage<FriendShip> {
             "    WHERE f1.user1Id = ? AND f2.user1Id = ? \n" +
             "    AND f1.status_friend = 1 AND f2.status_friend = 1\n" +
             ") common_friends \n" +
-            "ON users.user_id = common_friends.common_friend";
+            "ON users.userId = common_friends.common_friend";
     private static final String FIND_ALL_FRIENDS_BY_ID = "SELECT u.*\n" +
             "FROM users AS u\n" +
-            "JOIN friends AS f ON u.user_id = f.user2Id\n" +
+            "JOIN friends AS f ON u.userId = f.user2Id\n" +
             "WHERE f.user1Id = ? AND f.status_friend = 1;";
     private final JdbcTemplate jdbcTemplate;
 
