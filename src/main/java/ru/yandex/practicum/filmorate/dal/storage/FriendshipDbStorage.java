@@ -4,7 +4,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import ru.yandex.practicum.filmorate.dal.mappers.UserRowMapper;
-import ru.yandex.practicum.filmorate.model.FriendShip;
+import ru.yandex.practicum.filmorate.model.Friendship;
 import ru.yandex.practicum.filmorate.model.User;
 
 import java.sql.PreparedStatement;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class FriendShipDbStorage extends BaseDbStorage<FriendShip> {
+public class FriendshipDbStorage extends BaseDbStorage<Friendship> {
     private static final String INSERT_QUERY = "INSERT INTO friends(user1Id, user2Id, status_friend)" +
             "VALUES (?, ?, ?)";
     private static final String FIND_BY_FRIENDS = "SELECT * FROM friends WHERE user1Id = ? AND user2Id = ? " +
@@ -35,12 +35,12 @@ public class FriendShipDbStorage extends BaseDbStorage<FriendShip> {
             "WHERE f.user1Id = ? AND f.status_friend = 1;";
     private final JdbcTemplate jdbcTemplate;
 
-    public FriendShipDbStorage(JdbcTemplate jdbc, RowMapper<FriendShip> mapper, JdbcTemplate jdbcTemplate) {
-        super(jdbc, mapper, FriendShip.class);
+    public FriendshipDbStorage(JdbcTemplate jdbc, RowMapper<Friendship> mapper, JdbcTemplate jdbcTemplate) {
+        super(jdbc, mapper, Friendship.class);
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public FriendShip save(FriendShip friendShip) {
+    public Friendship save(Friendship friendShip) {
         add(
                 INSERT_QUERY,
                 friendShip.getUser1Id(),
@@ -49,7 +49,7 @@ public class FriendShipDbStorage extends BaseDbStorage<FriendShip> {
         return friendShip;
     }
 
-    public Optional<FriendShip> findFriendShip(long id, long friendId) {
+    public Optional<Friendship> findFriendship(long id, long friendId) {
         return findOne(FIND_BY_FRIENDS, id, friendId);
     }
 

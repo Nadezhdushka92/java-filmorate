@@ -1,15 +1,14 @@
 package ru.yandex.practicum.filmorate.service;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.dal.mapper.UserMapper;
-import ru.yandex.practicum.filmorate.dal.storage.FriendShipDbStorage;
+import ru.yandex.practicum.filmorate.dal.storage.FriendshipDbStorage;
 import ru.yandex.practicum.filmorate.dal.storage.UserDbStorage;
 import ru.yandex.practicum.filmorate.exception.UserNotExistException;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
-import ru.yandex.practicum.filmorate.model.FriendShip;
+import ru.yandex.practicum.filmorate.model.Friendship;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.validation.ValidationUser;
 
@@ -17,26 +16,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Slf4j
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class UserService {
     private final ValidationUser validation;
     private final UserDbStorage userDbStorage;
-    private final FriendShipDbStorage friendShipDbStorage;
+    private final FriendshipDbStorage friendShipDbStorage;
 
-    @Autowired
-    public UserService(@Qualifier("userDbStorage") UserDbStorage userDbStorage, FriendShipDbStorage friendShipDbStorage) {
-        this.userDbStorage = userDbStorage;
-        this.friendShipDbStorage = friendShipDbStorage;
-        validation = new ValidationUser();
-    }
 
-//    @Autowired
-//    public UserService(@Qualifier("inMemoryUserStorage") UserStorage userStorage, @Qualifier("inMemoryFilmStorage") FilmStorage filmStorage) {
-//        this.userStorage = userStorage;
-//        this.filmStorage = filmStorage;
-//        validation = new ValidationUser();
-//    }
     public List<User> getUsers() {
         log.info("Значение{}", userDbStorage.allUsers());
         return userDbStorage.allUsers();
@@ -76,7 +63,7 @@ public class UserService {
         User user = checkUsers(userId);
         checkUsers(friendId);
 
-        Optional<FriendShip> friendShip = friendShipDbStorage.findFriendShip(userId, friendId);
+        Optional<Friendship> friendShip = friendShipDbStorage.findFriendship(userId, friendId);
         log.info("Проверяем друга{} ", friendShip);
         if (friendShip.isPresent()) {
             log.error("Пользователь: {} уже состоит в дружбе с пользователем: {}", friendId, userId);
@@ -84,7 +71,7 @@ public class UserService {
                     + " уже состоит в дружбе с пользователем: " + userId);
         }
 
-        FriendShip newFriendShip = new FriendShip(userId, friendId);
+        Friendship newFriendShip = new Friendship(userId, friendId);
         friendShipDbStorage.save(newFriendShip);
         log.info("Пользователь {} добавлен в список друзей пользователя {}", friendId, userId);
         log.info("Друзья {}", newFriendShip);

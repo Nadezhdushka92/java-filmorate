@@ -1,8 +1,7 @@
 package ru.yandex.practicum.filmorate.service;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.dal.mapper.FilmMapper;
 import ru.yandex.practicum.filmorate.dal.storage.*;
@@ -18,7 +17,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class FilmService {
     private final ValidationFilm validation;
@@ -28,21 +27,6 @@ public class FilmService {
     private final FilmMpaDbStorage mpaDbStorage;
     private final FilmGenreDbStorage genreDbStorage;
 
-    @Autowired
-    public FilmService(@Qualifier("filmDbStorage") FilmDbStorage filmDbStorage, @Qualifier("userDbStorage") UserDbStorage userDbStorage, FilmLikeDbStorage likeDbStorage, FilmMpaDbStorage mpaDbStorage, FilmGenreDbStorage genreDbStorage) {
-        this.filmDbStorage = filmDbStorage;
-        this.userDbStorage = userDbStorage;
-        this.likeDbStorage = likeDbStorage;
-        this.mpaDbStorage = mpaDbStorage;
-        this.genreDbStorage = genreDbStorage;
-        validation = new ValidationFilm();
-    }
-
-//    @Autowired
-//    public FilmService(@Qualifier("inMemoryFilmStorage") FilmStorage filmStorage) {
-//        this.filmStorage = filmStorage;
-//        validation = new ValidationFilm();
-//    }
     public List<Film> getFilms() {
         return filmDbStorage.findAllFilms();
     }

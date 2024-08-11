@@ -14,15 +14,4 @@ public interface FilmStorage {
 
     Optional<Film> getFilm(Long id);
 
-//    Map<Long, Film> getFilms();
-//
-//    Film create(Film film);
-//
-//    Film update(Film film);
-//
-//    Film findFilmById(Long id);
-//
-//    void addLike(long filmId, long userId);
-//
-//    void deleteLike(long filmId, long userId);
 }

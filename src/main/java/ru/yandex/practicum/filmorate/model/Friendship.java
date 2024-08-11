@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class FriendShip {
+public class Friendship {
     private Long user1Id;
     private Long user2Id;
     private int statusFriend;
 
-    public FriendShip(Long user1Id, Long user2Id) {
+    public Friendship(Long user1Id, Long user2Id) {
         this.user1Id = user1Id;
         this.user2Id = user2Id;
         this.statusFriend = 1;
