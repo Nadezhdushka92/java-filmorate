@@ -1,49 +1,48 @@
 package ru.yandex.practicum.filmorate.controller;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ru.yandex.practicum.filmorate.exception.FilmNotExistException;
-import ru.yandex.practicum.filmorate.exception.UserNotExistException;
-import ru.yandex.practicum.filmorate.exception.ValidationException;
+import ru.yandex.practicum.filmorate.exception.*;
 
-@Slf4j
-@RestControllerAdvice(basePackages = "ru.yandex.practicum.filmorate")
+@RestControllerAdvice
 public class ErrorHandler {
-    @ExceptionHandler
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleValidationException(ValidationException e) {
-        log.error(e.getMessage());
-        return new ErrorResponse("Ошибка валидации");
+    @ExceptionHandler(value = {ValidationException.class, MethodArgumentNotValidException.class})
+    public ErrorResponse handleValidationException(final ValidationException exception) {
+        return new ErrorResponse("Ошибка валидации", exception.getMessage());
     }
 
-    @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handleFilmNotFond(FilmNotExistException e) {
-        log.error(e.getMessage());
-        return new ErrorResponse("Фильм не найден");
+    @ExceptionHandler
+    public ErrorResponse handleNotFoundFilm(final FilmNotExistException exception) {
+        return new ErrorResponse("Film объект не найден", exception.getMessage());
     }
 
-    @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handleUserNotFond(UserNotExistException e) {
-        log.error(e.getMessage());
-        return new ErrorResponse("Пользователь не найден");
+    @ExceptionHandler
+    public ErrorResponse handleNotFoundUser(final UserNotExistException exception) {
+        return new ErrorResponse("User объект не найден", exception.getMessage());
     }
 
-    @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handleLikesNotFond(LayerInstantiationException e) {
-        log.error(e.getMessage());
-        return new ErrorResponse("Рейтинг не найден");
+    @ExceptionHandler
+    public ErrorResponse handleNotFoundGenre(final GenreNotExistException exception) {
+        return new ErrorResponse("Genre объект не найден", exception.getMessage());
     }
 
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler
+    public ErrorResponse handleNotFoundMpa(final MpaNotExistException exception) {
+        return new ErrorResponse("Mpa объект не найден", exception.getMessage());
+    }
+
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorResponse handleUnknownException(Throwable e) {
-        log.error(e.getMessage());
-        return new ErrorResponse("Произошла непредвиденная ошибка");
+    @ExceptionHandler(value = {Exception.class, InternalServerException.class})
+    public ErrorResponse handleInternalServerErrorException(final InternalServerException exception) {
+        return new ErrorResponse("Возникло исключение.", exception.getMessage());
     }
 }

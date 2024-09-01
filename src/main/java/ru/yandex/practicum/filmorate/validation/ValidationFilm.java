@@ -1,12 +1,14 @@
 package ru.yandex.practicum.filmorate.validation;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+@Component
 @Slf4j
 public class ValidationFilm {
 
@@ -23,7 +25,7 @@ public class ValidationFilm {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate data1 = LocalDate.parse("1895-12-28", formatter);
-        LocalDate data2 = LocalDate.parse(film.getReleaseDate(), formatter);
+        LocalDate data2 = LocalDate.parse(film.getReleaseDate().toString(), formatter);
 
         if (data2.isBefore(data1)) {
             throw new ValidationException("Дата релиза — не раньше 28 декабря 1895 года");

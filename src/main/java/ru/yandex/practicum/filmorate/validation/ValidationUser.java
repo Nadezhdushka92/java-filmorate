@@ -1,12 +1,14 @@
 package ru.yandex.practicum.filmorate.validation;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+@Component
 @Slf4j
 public class ValidationUser {
     public void validation(User user) {
@@ -44,7 +46,7 @@ public class ValidationUser {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate nowDate = LocalDate.now();
-        LocalDate birthday = LocalDate.parse(user.getBirthday(), formatter);
+        LocalDate birthday = LocalDate.parse(user.getBirthday().toString(), formatter);
 
         if (nowDate.isBefore(birthday)) {
             throw new ValidationException("Дата рождения не может быть в будущем");
